@@ -2,6 +2,7 @@ package com.example.watchandrate.user_interface
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -31,6 +32,7 @@ class ReviewFragment : Fragment(R.layout.fragment_review) {
         )[ReviewViewModel::class.java]
 
         val recyclerReviews = view.findViewById<RecyclerView>(R.id.recyclerReviews)
+        val btnAddReview = view.findViewById<Button>(R.id.btnAddReview)
 
         reviewAdapter = ReviewAdapter()
         recyclerReviews.adapter = reviewAdapter
@@ -43,6 +45,13 @@ class ReviewFragment : Fragment(R.layout.fragment_review) {
                 sampleInserted = true
                 insertSampleReview()
             }
+        }
+
+        btnAddReview.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainer, AddReviewFragment())
+                .addToBackStack(null)
+                .commit()
         }
     }
 
