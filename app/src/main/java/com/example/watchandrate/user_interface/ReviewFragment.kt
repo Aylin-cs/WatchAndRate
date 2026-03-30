@@ -2,21 +2,65 @@ package com.example.watchandrate.user_interface
 
 import android.os.Bundle
 import android.view.View
-import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.watchandrate.R
+import com.example.watchandrate.data.AppDatabase
+import com.example.watchandrate.model.Review
+import com.example.watchandrate.repository.ReviewRepository
+import com.example.watchandrate.viewmodel.ReviewViewModel
+import java.util.UUID
 
 class ReviewFragment : Fragment(R.layout.fragment_review) {
+
+    private lateinit var viewModel: ReviewViewModel
+    private lateinit var reviewAdapter: ReviewAdapter
+    private var sampleInserted = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val tvMovieTitle = view.findViewById<TextView>(R.id.tvMovieTitle)
-        val tvUsername = view.findViewById<TextView>(R.id.tvUsername)
-        val tvReviewText = view.findViewById<TextView>(R.id.tvReviewText)
+        val reviewDao = AppDatabase.getInstance(requireContext()).reviewDao()
+        val repository = ReviewRepository(reviewDao)
 
-        tvMovieTitle.text = "The Matrix"
-        tvUsername.text = "Aylin"
-        tvReviewText.text = "This is my first review screen."
+        viewModel = ViewModelProvider(
+            this,
+            ReviewViewModel.provideFactory(repository)
+        )[ReviewViewModel::class.java]
+
+        val recyclerReviews = view.findViewById<RecyclerView>(R.id.recyclerReviews)
+
+        reviewAdapter = ReviewAdapter()
+        recyclerReviews.adapter = reviewAdapter
+        recyclerReviews.layoutManager = LinearLayoutManager(requireContext())
+
+        viewModel.allReviews.observe(viewLifecycleOwner) { reviews ->
+            reviewAdapter.submitList(reviews)
+
+            if (reviews.isEmpty() && !sampleInserted) {
+                sampleInserted = true
+                insertSampleReview()
+            }
+        }
+    }
+
+    private fun insertSampleReview() {
+        val sampleReview = Review(
+            id = UUID.randomUUID().toString(),
+            userId = "user_1",
+            movieId = "tt0133093",
+            movieTitle = "The Matrix",
+            text = "Amazing movie with a great story.",
+            imageUrl = "",
+            localImagePath = null,
+            userPhotoUrl = "",
+            username = "Eden",
+            createdAt = System.currentTimeMillis(),
+            updatedAt = System.currentTimeMillis()
+        )
+
+        viewModel.insertReview(sampleReview)
     }
 }
