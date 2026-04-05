@@ -3,12 +3,15 @@ package com.example.watchandrate.user_interface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.watchandrate.R
 import com.example.watchandrate.model.Review
 
-class ReviewAdapter : RecyclerView.Adapter<ReviewAdapter.ReviewViewHolder>() {
+class ReviewAdapter(
+    private val onDeleteClick: (Review) -> Unit
+) : RecyclerView.Adapter<ReviewAdapter.ReviewViewHolder>() {
 
     private var reviews: List<Review> = emptyList()
 
@@ -24,7 +27,7 @@ class ReviewAdapter : RecyclerView.Adapter<ReviewAdapter.ReviewViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: ReviewViewHolder, position: Int) {
-        holder.bind(reviews[position])
+        holder.bind(reviews[position], onDeleteClick)
     }
 
     override fun getItemCount(): Int = reviews.size
@@ -33,11 +36,16 @@ class ReviewAdapter : RecyclerView.Adapter<ReviewAdapter.ReviewViewHolder>() {
         private val tvMovieTitle: TextView = itemView.findViewById(R.id.tvMovieTitle)
         private val tvUsername: TextView = itemView.findViewById(R.id.tvUsername)
         private val tvReviewText: TextView = itemView.findViewById(R.id.tvReviewText)
+        private val btnDeleteReview: ImageButton = itemView.findViewById(R.id.btnDeleteReview)
 
-        fun bind(review: Review) {
+        fun bind(review: Review, onDeleteClick: (Review) -> Unit) {
             tvMovieTitle.text = review.movieTitle
             tvUsername.text = review.username
             tvReviewText.text = review.text
+
+            btnDeleteReview.setOnClickListener {
+                onDeleteClick(review)
+            }
         }
     }
 }
