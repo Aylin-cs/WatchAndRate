@@ -36,8 +36,14 @@ class ReviewFragment : Fragment(R.layout.fragment_review) {
         val btnAddReview = view.findViewById<Button>(R.id.btnAddReview)
 
         reviewAdapter = ReviewAdapter { review ->
-            viewModel.deleteReview(review)
-            Toast.makeText(requireContext(), "Review deleted", Toast.LENGTH_SHORT).show()
+            androidx.appcompat.app.AlertDialog.Builder(requireContext())
+                .setTitle("Delete Review")
+                .setMessage("Are you sure you want to delete this review?")
+                .setPositiveButton("Delete") { _, _ ->
+                    viewModel.deleteReview(review)
+                    Toast.makeText(requireContext(), "Review deleted", Toast.LENGTH_SHORT).show()
+                }
+                .setNegativeButton("Cancel", null).show()
         }
 
         recyclerReviews.adapter = reviewAdapter
