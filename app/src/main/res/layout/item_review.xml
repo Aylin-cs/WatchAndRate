@@ -20,6 +20,14 @@
             android:textStyle="bold" />
 
         <ImageButton
+            android:id="@+id/btnEditReview"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="Edit review"
+            android:src="@android:drawable/ic_menu_edit" />
+
+        <ImageButton
             android:id="@+id/btnDeleteReview"
             android:layout_width="40dp"
             android:layout_height="40dp"
