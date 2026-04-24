@@ -12,6 +12,7 @@ import com.example.watchandrate.model.Review
 import com.example.watchandrate.repository.ReviewRepository
 import com.example.watchandrate.viewmodel.ReviewViewModel
 import java.util.UUID
+import androidx.appcompat.widget.Toolbar
 
 class AddReviewFragment : Fragment(R.layout.fragment_add_review) {
 
@@ -32,6 +33,13 @@ class AddReviewFragment : Fragment(R.layout.fragment_add_review) {
         val etUsername = view.findViewById<EditText>(R.id.etUsername)
         val etReviewText = view.findViewById<EditText>(R.id.etReviewText)
         val btnSaveReview = view.findViewById<Button>(R.id.btnSaveReview)
+        val toolbar = view.findViewById<Toolbar>(R.id.toolbarAddReview)
+
+        toolbar.navigationIcon?.setTint(resources.getColor(android.R.color.white))
+
+        toolbar.setNavigationOnClickListener {
+            parentFragmentManager.popBackStack()
+        }
 
         btnSaveReview.setOnClickListener {
             val movieTitle = etMovieTitle.text.toString().trim()
@@ -58,9 +66,7 @@ class AddReviewFragment : Fragment(R.layout.fragment_add_review) {
 
             viewModel.insertReview(review)
 
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainer, ReviewFragment())
-                .commit()
+            parentFragmentManager.popBackStack()
         }
     }
 }

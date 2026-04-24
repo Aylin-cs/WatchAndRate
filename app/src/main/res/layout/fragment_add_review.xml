@@ -5,13 +5,15 @@
     android:layout_height="match_parent"
     android:padding="16dp">
 
-    <TextView
-        android:id="@+id/tvAddReviewTitle"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarAddReview"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Add Review"
-        android:textSize="24sp"
-        android:textStyle="bold"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        app:title="Add Review"
+        app:titleTextColor="@android:color/white"
+        app:navigationIcon="?attr/homeAsUpIndicator"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -22,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:hint="Movie title"
-        app:layout_constraintTop_toBottomOf="@id/tvAddReviewTitle"
+        app:layout_constraintTop_toBottomOf="@id/toolbarAddReview"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -30,7 +32,7 @@
         android:id="@+id/etUsername"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="20dp"
         android:hint="Username"
         app:layout_constraintTop_toBottomOf="@id/etMovieTitle"
         app:layout_constraintStart_toStartOf="parent"
@@ -40,7 +42,7 @@
         android:id="@+id/etReviewText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="20dp"
         android:hint="Write your review"
         android:minLines="4"
         android:gravity="top"
@@ -54,6 +56,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="Save"
+        android:backgroundTint="?attr/colorPrimary"
+        android:textColor="@android:color/white"
         app:layout_constraintTop_toBottomOf="@id/etReviewText"
         app:layout_constraintEnd_toEndOf="parent" />
 
