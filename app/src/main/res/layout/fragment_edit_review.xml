@@ -5,13 +5,15 @@
     android:layout_height="match_parent"
     android:padding="16dp">
 
-    <TextView
-        android:id="@+id/tvEditReviewTitle"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarEditReview"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Edit Review"
-        android:textSize="24sp"
-        android:textStyle="bold"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        app:title="Edit Review"
+        app:titleTextColor="@android:color/white"
+        app:navigationIcon="?attr/homeAsUpIndicator"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -22,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:hint="Movie title"
-        app:layout_constraintTop_toBottomOf="@id/tvEditReviewTitle"
+        app:layout_constraintTop_toBottomOf="@id/toolbarEditReview"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -30,7 +32,7 @@
         android:id="@+id/etEditUsername"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="20dp"
         android:hint="Username"
         app:layout_constraintTop_toBottomOf="@id/etEditMovieTitle"
         app:layout_constraintStart_toStartOf="parent"
@@ -40,7 +42,7 @@
         android:id="@+id/etEditReviewText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="20dp"
         android:hint="Write your review"
         android:minLines="4"
         android:gravity="top"
@@ -51,9 +53,11 @@
     <Button
         android:id="@+id/btnSaveChanges"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginTop="24dp"
         android:text="Save Changes"
+        android:backgroundTint="?attr/colorPrimary"
+        android:textColor="@android:color/white"
         app:layout_constraintTop_toBottomOf="@id/etEditReviewText"
         app:layout_constraintEnd_toEndOf="parent" />
 

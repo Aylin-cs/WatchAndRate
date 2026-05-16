@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.watchandrate.R
@@ -27,6 +28,14 @@ class EditReviewFragment : Fragment(R.layout.fragment_edit_review) {
             this,
             ReviewViewModel.provideFactory(repository)
         )[ReviewViewModel::class.java]
+
+        val toolbar = view.findViewById<Toolbar>(R.id.toolbarEditReview)
+
+        toolbar.navigationIcon?.setTint(resources.getColor(android.R.color.white))
+
+        toolbar.setNavigationOnClickListener {
+            parentFragmentManager.popBackStack()
+        }
 
         val etMovieTitle = view.findViewById<EditText>(R.id.etEditMovieTitle)
         val etUsername = view.findViewById<EditText>(R.id.etEditUsername)
@@ -57,9 +66,7 @@ class EditReviewFragment : Fragment(R.layout.fragment_edit_review) {
 
             viewModel.updateReview(updatedReview)
 
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainer, ReviewFragment())
-                .commit()
+            parentFragmentManager.popBackStack()
         }
     }
 }
