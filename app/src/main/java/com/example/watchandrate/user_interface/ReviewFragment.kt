@@ -1,8 +1,11 @@
 package com.example.watchandrate.user_interface
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -13,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.watchandrate.R
 import com.example.watchandrate.data.AppDatabase
+import com.example.watchandrate.model.Review
 import com.example.watchandrate.repository.ReviewRepository
 import com.example.watchandrate.viewmodel.ReviewViewModel
 
@@ -21,14 +25,24 @@ class ReviewFragment : Fragment(R.layout.fragment_review) {
     private lateinit var viewModel: ReviewViewModel
     private lateinit var reviewAdapter: ReviewAdapter
 
+    private var allReviews: List<Review> = emptyList()
+    private var searchQuery: String = ""
+    private var showOnlyMyReviews: Boolean = false
+
+    // זמני עד שיהיה Firebase Auth אמיתי
+    private val currentUsername = "Ed"
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val reviewDao = AppDatabase.getInstance(requireContext()).reviewDao()
         val repository = ReviewRepository(reviewDao)
+
         val tvEmptyState = view.findViewById<TextView>(R.id.tvEmptyState)
         val recyclerReviews = view.findViewById<RecyclerView>(R.id.recyclerReviews)
         val btnAddReview = view.findViewById<Button>(R.id.btnAddReview)
+        val etSearch = view.findViewById<EditText>(R.id.etSearch)
+        val btnMyReviews = view.findViewById<Button>(R.id.btnMyReviews)
 
         viewModel = ViewModelProvider(
             this,
@@ -62,15 +76,30 @@ class ReviewFragment : Fragment(R.layout.fragment_review) {
         recyclerReviews.layoutManager = LinearLayoutManager(requireContext())
 
         viewModel.allReviews.observe(viewLifecycleOwner) { reviews ->
-            reviewAdapter.submitList(reviews)
+            allReviews = reviews
+            updateReviewList(tvEmptyState, recyclerReviews)
+        }
 
-            if (reviews.isEmpty()) {
-                tvEmptyState.visibility = View.VISIBLE
-                recyclerReviews.visibility = View.GONE
-            } else {
-                tvEmptyState.visibility = View.GONE
-                recyclerReviews.visibility = View.VISIBLE
+        etSearch.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                searchQuery = s.toString()
+                updateReviewList(tvEmptyState, recyclerReviews)
             }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        })
+
+        btnMyReviews.setOnClickListener {
+            showOnlyMyReviews = !showOnlyMyReviews
+
+            btnMyReviews.text = if (showOnlyMyReviews) {
+                "All reviews"
+            } else {
+                "My reviews"
+            }
+
+            updateReviewList(tvEmptyState, recyclerReviews)
         }
 
         btnAddReview.setOnClickListener {
@@ -78,6 +107,34 @@ class ReviewFragment : Fragment(R.layout.fragment_review) {
                 .replace(R.id.fragmentContainer, AddReviewFragment())
                 .addToBackStack(null)
                 .commit()
+        }
+    }
+
+    private fun updateReviewList(
+        tvEmptyState: TextView,
+        recyclerReviews: RecyclerView
+    ) {
+        val filteredReviews = allReviews.filter { review ->
+            val matchesSearch =
+                review.movieTitle.contains(searchQuery, ignoreCase = true) ||
+                        review.text.contains(searchQuery, ignoreCase = true) ||
+                        review.username.contains(searchQuery, ignoreCase = true)
+
+            val matchesUser =
+                !showOnlyMyReviews ||
+                        review.username.equals(currentUsername, ignoreCase = true)
+
+            matchesSearch && matchesUser
+        }
+
+        reviewAdapter.submitList(filteredReviews)
+
+        if (filteredReviews.isEmpty()) {
+            tvEmptyState.visibility = View.VISIBLE
+            recyclerReviews.visibility = View.GONE
+        } else {
+            tvEmptyState.visibility = View.GONE
+            recyclerReviews.visibility = View.VISIBLE
         }
     }
 }
