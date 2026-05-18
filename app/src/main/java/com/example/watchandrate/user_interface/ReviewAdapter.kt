@@ -3,6 +3,7 @@ package com.example.watchandrate.user_interface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -15,6 +16,7 @@ class ReviewAdapter(
 ) : RecyclerView.Adapter<ReviewAdapter.ReviewViewHolder>() {
 
     private var reviews: List<Review> = emptyList()
+    private val likedReviewIds = mutableSetOf<String>()
 
     fun submitList(newReviews: List<Review>) {
         reviews = newReviews
@@ -28,7 +30,21 @@ class ReviewAdapter(
     }
 
     override fun onBindViewHolder(holder: ReviewViewHolder, position: Int) {
-        holder.bind(reviews[position], onEditClick, onDeleteClick)
+        holder.bind(
+            review = reviews[position],
+            isLiked = likedReviewIds.contains(reviews[position].id),
+            onEditClick = onEditClick,
+            onDeleteClick = onDeleteClick,
+            onLikeClick = { review ->
+                if (likedReviewIds.contains(review.id)) {
+                    likedReviewIds.remove(review.id)
+                } else {
+                    likedReviewIds.add(review.id)
+                }
+
+                notifyItemChanged(position)
+            }
+        )
     }
 
     override fun getItemCount(): Int = reviews.size
@@ -37,17 +53,29 @@ class ReviewAdapter(
         private val tvMovieTitle: TextView = itemView.findViewById(R.id.tvMovieTitle)
         private val tvUsername: TextView = itemView.findViewById(R.id.tvUsername)
         private val tvReviewText: TextView = itemView.findViewById(R.id.tvReviewText)
+
         private val btnEditReview: ImageButton = itemView.findViewById(R.id.btnEditReview)
         private val btnDeleteReview: ImageButton = itemView.findViewById(R.id.btnDeleteReview)
+        private val btnLikeReview: Button = itemView.findViewById(R.id.btnLikeReview)
+        private val btnOpenReview: Button = itemView.findViewById(R.id.btnOpenReview)
+        private val btnCommentsReview: Button = itemView.findViewById(R.id.btnCommentsReview)
 
         fun bind(
             review: Review,
+            isLiked: Boolean,
             onEditClick: (Review) -> Unit,
-            onDeleteClick: (Review) -> Unit
+            onDeleteClick: (Review) -> Unit,
+            onLikeClick: (Review) -> Unit
         ) {
             tvMovieTitle.text = review.movieTitle
             tvUsername.text = review.username
             tvReviewText.text = review.text
+
+            btnLikeReview.text = if (isLiked) {
+                "♥ Like · 1"
+            } else {
+                "♡ Like · 0"
+            }
 
             btnEditReview.setOnClickListener {
                 onEditClick(review)
@@ -55,6 +83,18 @@ class ReviewAdapter(
 
             btnDeleteReview.setOnClickListener {
                 onDeleteClick(review)
+            }
+
+            btnLikeReview.setOnClickListener {
+                onLikeClick(review)
+            }
+
+            btnOpenReview.setOnClickListener {
+                // TODO: open review details screen
+            }
+
+            btnCommentsReview.setOnClickListener {
+                // TODO: open comments screen
             }
         }
     }
