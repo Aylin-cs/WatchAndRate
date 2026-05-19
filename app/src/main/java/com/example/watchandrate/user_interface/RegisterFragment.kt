@@ -1,0 +1,8 @@
+package com.example.watchandrate.user_interface
+
+import androidx.fragment.app.Fragment
+import com.example.watchandrate.R
+
+class RegisterFragment : Fragment(R.layout.fragment_register) {
+
+}
