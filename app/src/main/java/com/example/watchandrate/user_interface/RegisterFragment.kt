@@ -39,13 +39,21 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
                 return@setOnClickListener
             }
 
+            registerButton.isEnabled = false
+
             auth.createUserWithEmailAndPassword(email, password)
                 .addOnSuccessListener {
+                    registerButton.isEnabled = true
                     Toast.makeText(requireContext(), "Registration successful", Toast.LENGTH_SHORT).show()
                     findNavController().navigate(R.id.action_registerFragment_to_reviewFragment)
                 }
                 .addOnFailureListener { error ->
-                    Toast.makeText(requireContext(), error.message, Toast.LENGTH_SHORT).show()
+                    registerButton.isEnabled = true
+                    Toast.makeText(
+                        requireContext(),
+                        "Register failed: ${error.localizedMessage}",
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
         }
     }
