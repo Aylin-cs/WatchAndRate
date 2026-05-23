@@ -19,6 +19,7 @@ import com.example.watchandrate.data.AppDatabase
 import com.example.watchandrate.model.Review
 import com.example.watchandrate.repository.ReviewRepository
 import com.example.watchandrate.viewmodel.ReviewViewModel
+import androidx.navigation.fragment.findNavController
 
 class ReviewFragment : Fragment(R.layout.fragment_review) {
 
@@ -29,7 +30,6 @@ class ReviewFragment : Fragment(R.layout.fragment_review) {
     private var searchQuery: String = ""
     private var showOnlyMyReviews: Boolean = false
 
-    // זמני עד שיהיה Firebase Auth אמיתי
     private val currentUsername = "Ed"
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -103,10 +103,7 @@ class ReviewFragment : Fragment(R.layout.fragment_review) {
         }
 
         btnAddReview.setOnClickListener {
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainer, AddReviewFragment())
-                .addToBackStack(null)
-                .commit()
+            findNavController().navigate(R.id.action_reviewFragment_to_addReviewFragment)
         }
     }
 
