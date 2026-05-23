@@ -55,13 +55,10 @@ class ReviewFragment : Fragment(R.layout.fragment_review) {
 
         reviewAdapter = ReviewAdapter(
             onEditClick = { review ->
-                val fragment = EditReviewFragment()
-                fragment.arguments = bundleOf("reviewId" to review.id)
-
-                parentFragmentManager.beginTransaction()
-                    .replace(R.id.fragmentContainer, fragment)
-                    .addToBackStack(null)
-                    .commit()
+                findNavController().navigate(
+                    R.id.action_reviewFragment_to_editReviewFragment,
+                    bundleOf("reviewId" to review.id)
+                )
             },
             onDeleteClick = { review ->
                 AlertDialog.Builder(requireContext())
