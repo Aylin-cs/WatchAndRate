@@ -20,6 +20,9 @@ import com.example.watchandrate.model.Review
 import com.example.watchandrate.repository.ReviewRepository
 import com.example.watchandrate.viewmodel.ReviewViewModel
 import androidx.navigation.fragment.findNavController
+import com.google.firebase.auth.FirebaseAuth
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.NavOptions
 
 class ReviewFragment : Fragment(R.layout.fragment_review) {
 
@@ -43,6 +46,7 @@ class ReviewFragment : Fragment(R.layout.fragment_review) {
         val btnAddReview = view.findViewById<Button>(R.id.btnAddReview)
         val etSearch = view.findViewById<EditText>(R.id.etSearch)
         val btnMyReviews = view.findViewById<Button>(R.id.btnMyReviews)
+        val btnLogout = view.findViewById<Button>(R.id.btnLogout)
 
         viewModel = ViewModelProvider(
             this,
@@ -104,6 +108,18 @@ class ReviewFragment : Fragment(R.layout.fragment_review) {
 
         btnAddReview.setOnClickListener {
             findNavController().navigate(R.id.action_reviewFragment_to_addReviewFragment)
+        }
+
+        btnLogout.setOnClickListener {
+            FirebaseAuth.getInstance().signOut()
+
+            findNavController().navigate(
+                R.id.loginFragment,
+                null,
+                NavOptions.Builder()
+                    .setPopUpTo(R.id.nav_graph, true)
+                    .build()
+            )
         }
     }
 
