@@ -23,7 +23,19 @@ class ReviewRepository(private val reviewDao: ReviewDao) {
         return reviewDao.getReviewById(reviewId)
     }
 
-    // 🔥 חשוב – קודם שומרים ל־Room, ואז מנסים Firebase
+    suspend fun syncReviewsFromFirestore() {
+        try {
+            val snapshot = reviewsCollection.get().await()
+            val reviews = snapshot.toObjects(Review::class.java)
+
+            reviews.forEach { review ->
+                reviewDao.insertReview(review)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
     suspend fun insertReview(review: Review) {
         reviewDao.insertReview(review)
 

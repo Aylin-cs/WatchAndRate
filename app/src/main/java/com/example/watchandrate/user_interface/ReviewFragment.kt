@@ -53,6 +53,7 @@ class ReviewFragment : Fragment(R.layout.fragment_review) {
             this,
             ReviewViewModel.provideFactory(repository)
         )[ReviewViewModel::class.java]
+        viewModel.syncReviewsFromFirestore()
 
         reviewAdapter = ReviewAdapter(
             currentUserId = currentUserId,
