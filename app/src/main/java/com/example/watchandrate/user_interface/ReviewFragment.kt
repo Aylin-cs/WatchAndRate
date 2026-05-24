@@ -22,6 +22,9 @@ import com.example.watchandrate.viewmodel.ReviewViewModel
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
 import androidx.navigation.NavOptions
+import androidx.lifecycle.lifecycleScope
+import com.example.watchandrate.network.RetrofitClient
+import kotlinx.coroutines.launch
 
 class ReviewFragment : Fragment(R.layout.fragment_review) {
 
@@ -48,6 +51,7 @@ class ReviewFragment : Fragment(R.layout.fragment_review) {
         val btnMyReviews = view.findViewById<Button>(R.id.btnMyReviews)
         val btnLogout = view.findViewById<Button>(R.id.btnLogout)
         val btnProfile = view.findViewById<Button>(R.id.btnProfile)
+        val btnSearchMovieApi = view.findViewById<Button>(R.id.btnSearchMovieApi)
 
         viewModel = ViewModelProvider(
             this,
@@ -124,6 +128,50 @@ class ReviewFragment : Fragment(R.layout.fragment_review) {
                     .setPopUpTo(R.id.nav_graph, true)
                     .build()
             )
+        }
+        btnSearchMovieApi.setOnClickListener {
+            val movieTitle = etSearch.text.toString().trim()
+
+            if (movieTitle.isEmpty()) {
+                Toast.makeText(requireContext(), "Enter a movie name in search", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            lifecycleScope.launch {
+                try {
+                    val movie = RetrofitClient.omdbApi.searchMovie(
+                        apiKey = "2c8b3ac4",
+                        title = movieTitle
+                    )
+
+                    if (movie.Response == "True") {
+                        AlertDialog.Builder(requireContext())
+                            .setIcon(android.R.drawable.ic_dialog_info)
+                            .setTitle("${movie.Title} (${movie.Year})")
+                            .setMessage(
+                                "Genre: ${movie.Genre}\n" +
+                                        "Director: ${movie.Director}\n" +
+                                        "Rating: ${movie.imdbRating}\n\n" +
+                                        "${movie.Plot}"
+                            )
+                            .setPositiveButton("OK", null)
+                            .setCancelable(true)
+                            .show()
+                    } else {
+                        Toast.makeText(
+                            requireContext(),
+                            movie.Error ?: "Movie not found",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                } catch (e: Exception) {
+                    Toast.makeText(
+                        requireContext(),
+                        "API error: ${e.message}",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            }
         }
     }
 
