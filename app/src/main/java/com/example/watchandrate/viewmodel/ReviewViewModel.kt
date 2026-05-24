@@ -12,7 +12,14 @@ import kotlinx.coroutines.launch
 
 class ReviewViewModel(private val reviewRepository: ReviewRepository) : ViewModel() {
 
-    val allReviews: LiveData<List<Review>> = reviewRepository.getAllReviews().asLiveData()
+    val allReviews: LiveData<List<Review>> =
+        reviewRepository.getAllReviews().asLiveData()
+
+    fun syncReviewsFromFirestore() {
+        viewModelScope.launch {
+            reviewRepository.syncReviewsFromFirestore()
+        }
+    }
 
     fun getUserReviews(userId: String): LiveData<List<Review>> {
         return reviewRepository.getUserReviews(userId).asLiveData()
@@ -26,9 +33,10 @@ class ReviewViewModel(private val reviewRepository: ReviewRepository) : ViewMode
         return reviewLiveData
     }
 
-    fun insertReview(review: Review) {
+    fun insertReview(review: Review, onFinished: () -> Unit = {}) {
         viewModelScope.launch {
             reviewRepository.insertReview(review)
+            onFinished()
         }
     }
 

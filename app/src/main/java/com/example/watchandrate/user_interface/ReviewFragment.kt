@@ -47,11 +47,13 @@ class ReviewFragment : Fragment(R.layout.fragment_review) {
         val etSearch = view.findViewById<EditText>(R.id.etSearch)
         val btnMyReviews = view.findViewById<Button>(R.id.btnMyReviews)
         val btnLogout = view.findViewById<Button>(R.id.btnLogout)
+        val btnProfile = view.findViewById<Button>(R.id.btnProfile)
 
         viewModel = ViewModelProvider(
             this,
             ReviewViewModel.provideFactory(repository)
         )[ReviewViewModel::class.java]
+        viewModel.syncReviewsFromFirestore()
 
         reviewAdapter = ReviewAdapter(
             currentUserId = currentUserId,
@@ -106,6 +108,10 @@ class ReviewFragment : Fragment(R.layout.fragment_review) {
 
         btnAddReview.setOnClickListener {
             findNavController().navigate(R.id.action_reviewFragment_to_addReviewFragment)
+        }
+
+        btnProfile.setOnClickListener {
+            findNavController().navigate(R.id.action_reviewFragment_to_profileFragment)
         }
 
         btnLogout.setOnClickListener {
