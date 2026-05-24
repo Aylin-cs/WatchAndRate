@@ -1,10 +1,13 @@
 package com.example.watchandrate.user_interface
 
+import android.graphics.BitmapFactory
+import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.watchandrate.R
@@ -55,6 +58,7 @@ class ReviewAdapter(
         private val tvMovieTitle: TextView = itemView.findViewById(R.id.tvMovieTitle)
         private val tvUsername: TextView = itemView.findViewById(R.id.tvUsername)
         private val tvReviewText: TextView = itemView.findViewById(R.id.tvReviewText)
+        private val ivReviewImage: ImageView = itemView.findViewById(R.id.ivReviewImage)
 
         private val btnEditReview: ImageButton = itemView.findViewById(R.id.btnEditReview)
         private val btnDeleteReview: ImageButton = itemView.findViewById(R.id.btnDeleteReview)
@@ -76,6 +80,20 @@ class ReviewAdapter(
             tvUsername.text = review.username
             tvReviewText.text = review.text
             tvStars.text = "★★★★★"
+
+            if (!review.imageUrl.isNullOrEmpty()) {
+                try {
+                    val bytes = Base64.decode(review.imageUrl, Base64.DEFAULT)
+                    val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+
+                    ivReviewImage.setImageBitmap(bitmap)
+                    ivReviewImage.visibility = View.VISIBLE
+                } catch (e: Exception) {
+                    ivReviewImage.visibility = View.GONE
+                }
+            } else {
+                ivReviewImage.visibility = View.GONE
+            }
 
             val isOwner = review.userId == currentUserId
 
