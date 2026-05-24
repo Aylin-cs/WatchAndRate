@@ -119,7 +119,19 @@ class ReviewAdapter(
             }
 
             btnOpenReview.setOnClickListener {
-                // TODO: open review details screen
+                val message =
+                    "🎬 ${review.movieTitle}\n\n" +
+                            "👤 Reviewed by: ${review.username}\n\n" +
+                            "⭐ Rating: ★★★★★\n\n" +
+                            "💬 ${review.text}"
+
+                androidx.appcompat.app.AlertDialog.Builder(itemView.context)
+                    .setIcon(android.R.drawable.ic_dialog_info)
+                    .setTitle("Review Details")
+                    .setMessage(message)
+                    .setPositiveButton("Close", null)
+                    .setCancelable(true)
+                    .show()
             }
 
             btnCommentsReview.setOnClickListener {
