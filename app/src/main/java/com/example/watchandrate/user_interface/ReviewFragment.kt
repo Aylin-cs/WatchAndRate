@@ -21,7 +21,6 @@ import com.example.watchandrate.repository.ReviewRepository
 import com.example.watchandrate.viewmodel.ReviewViewModel
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.NavOptions
 
 class ReviewFragment : Fragment(R.layout.fragment_review) {
@@ -33,7 +32,8 @@ class ReviewFragment : Fragment(R.layout.fragment_review) {
     private var searchQuery: String = ""
     private var showOnlyMyReviews: Boolean = false
 
-    private val currentUsername = "Ed"
+    private val currentUserId: String?
+        get() = FirebaseAuth.getInstance().currentUser?.uid
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -54,6 +54,7 @@ class ReviewFragment : Fragment(R.layout.fragment_review) {
         )[ReviewViewModel::class.java]
 
         reviewAdapter = ReviewAdapter(
+            currentUserId = currentUserId,
             onEditClick = { review ->
                 findNavController().navigate(
                     R.id.action_reviewFragment_to_editReviewFragment,
@@ -132,7 +133,7 @@ class ReviewFragment : Fragment(R.layout.fragment_review) {
 
             val matchesUser =
                 !showOnlyMyReviews ||
-                        review.username.equals(currentUsername, ignoreCase = true)
+                        review.userId == currentUserId
 
             matchesSearch && matchesUser
         }

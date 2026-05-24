@@ -11,6 +11,7 @@ import com.example.watchandrate.R
 import com.example.watchandrate.model.Review
 
 class ReviewAdapter(
+    private val currentUserId: String?,
     private val onEditClick: (Review) -> Unit,
     private val onDeleteClick: (Review) -> Unit
 ) : RecyclerView.Adapter<ReviewAdapter.ReviewViewHolder>() {
@@ -32,6 +33,7 @@ class ReviewAdapter(
     override fun onBindViewHolder(holder: ReviewViewHolder, position: Int) {
         holder.bind(
             review = reviews[position],
+            currentUserId = currentUserId,
             isLiked = likedReviewIds.contains(reviews[position].id),
             onEditClick = onEditClick,
             onDeleteClick = onDeleteClick,
@@ -64,6 +66,7 @@ class ReviewAdapter(
 
         fun bind(
             review: Review,
+            currentUserId: String?,
             isLiked: Boolean,
             onEditClick: (Review) -> Unit,
             onDeleteClick: (Review) -> Unit,
@@ -73,6 +76,11 @@ class ReviewAdapter(
             tvUsername.text = review.username
             tvReviewText.text = review.text
             tvStars.text = "★★★★★"
+
+            val isOwner = review.userId == currentUserId
+
+            btnEditReview.visibility = if (isOwner) View.VISIBLE else View.GONE
+            btnDeleteReview.visibility = if (isOwner) View.VISIBLE else View.GONE
 
             btnLikeReview.text = if (isLiked) {
                 "♥ Like · 1"
