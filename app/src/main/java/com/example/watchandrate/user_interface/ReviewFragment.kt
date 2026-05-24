@@ -47,6 +47,7 @@ class ReviewFragment : Fragment(R.layout.fragment_review) {
         val etSearch = view.findViewById<EditText>(R.id.etSearch)
         val btnMyReviews = view.findViewById<Button>(R.id.btnMyReviews)
         val btnLogout = view.findViewById<Button>(R.id.btnLogout)
+        val btnProfile = view.findViewById<Button>(R.id.btnProfile)
 
         viewModel = ViewModelProvider(
             this,
@@ -106,6 +107,10 @@ class ReviewFragment : Fragment(R.layout.fragment_review) {
 
         btnAddReview.setOnClickListener {
             findNavController().navigate(R.id.action_reviewFragment_to_addReviewFragment)
+        }
+
+        btnProfile.setOnClickListener {
+            findNavController().navigate(R.id.action_reviewFragment_to_profileFragment)
         }
 
         btnLogout.setOnClickListener {
