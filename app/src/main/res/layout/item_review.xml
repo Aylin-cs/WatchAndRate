@@ -4,11 +4,11 @@
     android:layout_height="wrap_content"
     android:layout_marginBottom="12dp"
     android:background="@drawable/bg_review_card"
-    android:elevation="3dp"
+    android:elevation="2dp"
     android:orientation="vertical"
     android:padding="16dp">
 
-    <!-- Top row: user, movie, actions -->
+    <!-- Top row -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -20,8 +20,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Ed"
-            android:textColor="#444444"
-            android:textSize="14sp"
+            android:textColor="#666666"
+            android:textSize="13sp"
             android:textStyle="bold" />
 
         <TextView
@@ -30,75 +30,80 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_weight="1"
-            android:text="SUPERMAN"
+            android:text="Inception (2010)"
             android:textColor="#3F37C9"
-            android:textSize="16sp"
+            android:textSize="15sp"
             android:textStyle="bold" />
 
         <ImageButton
             android:id="@+id/btnEditReview"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:background="@android:color/transparent"
-            android:contentDescription="Edit review"
             android:src="@android:drawable/ic_menu_edit" />
 
         <ImageButton
             android:id="@+id/btnDeleteReview"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:background="@android:color/transparent"
-            android:contentDescription="Delete review"
             android:src="@android:drawable/ic_menu_delete" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvStars"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:text="★★★★★"
+        android:textColor="?attr/colorPrimary"
+        android:textSize="14sp" />
 
     <!-- Review text -->
     <TextView
         android:id="@+id/tvReviewText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="14dp"
-        android:text="AMAZING!"
+        android:layout_marginTop="10dp"
+        android:text="Amazing movie, loved every second."
         android:textColor="#222222"
-        android:textSize="16sp" />
+        android:textSize="14sp" />
 
-    <!-- Bottom row: Open / Like / Comments -->
+    <!-- Bottom row -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="14dp"
-        android:gravity="center_vertical"
+        android:layout_marginTop="12dp"
         android:orientation="horizontal">
 
         <Button
             android:id="@+id/btnOpenReview"
             android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:backgroundTint="#F5F7FF"
+            android:layout_height="36dp"
+            android:backgroundTint="#EEF1FF"
             android:text="Open"
             android:textColor="#222222"
-            android:textSize="12sp" />
+            android:textSize="11sp" />
 
         <Button
             android:id="@+id/btnLikeReview"
             android:layout_width="wrap_content"
-            android:layout_height="48dp"
+            android:layout_height="36dp"
             android:layout_marginStart="8dp"
-            android:backgroundTint="#F5F7FF"
+            android:backgroundTint="#EEF1FF"
             android:text="♡ Like · 0"
             android:textColor="#3F37C9"
-            android:textSize="12sp" />
+            android:textSize="11sp" />
 
         <Button
             android:id="@+id/btnCommentsReview"
             android:layout_width="wrap_content"
-            android:layout_height="48dp"
+            android:layout_height="36dp"
             android:layout_marginStart="8dp"
-            android:backgroundTint="#EEF4FF"
+            android:backgroundTint="#E7EDFF"
             android:text="0 comments"
             android:textColor="#3F37C9"
-            android:textSize="12sp" />
-
+            android:textSize="11sp" />
     </LinearLayout>
 
 </LinearLayout>

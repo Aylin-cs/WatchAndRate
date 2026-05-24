@@ -31,6 +31,30 @@
     <fragment
         android:id="@+id/reviewFragment"
         android:name="com.example.watchandrate.user_interface.ReviewFragment"
-        android:label="ReviewFragment" />
+        android:label="ReviewFragment">
+
+        <action
+            android:id="@+id/action_reviewFragment_to_addReviewFragment"
+            app:destination="@id/addReviewFragment" />
+
+        <action
+            android:id="@+id/action_reviewFragment_to_editReviewFragment"
+            app:destination="@id/editReviewFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/addReviewFragment"
+        android:name="com.example.watchandrate.user_interface.AddReviewFragment"
+        android:label="Add Review" />
+
+    <fragment
+        android:id="@+id/editReviewFragment"
+        android:name="com.example.watchandrate.user_interface.EditReviewFragment"
+        android:label="Edit Review">
+
+        <argument
+            android:name="reviewId"
+            app:argType="string" />
+    </fragment>
 
 </navigation>

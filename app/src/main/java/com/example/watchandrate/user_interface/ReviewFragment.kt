@@ -19,6 +19,10 @@ import com.example.watchandrate.data.AppDatabase
 import com.example.watchandrate.model.Review
 import com.example.watchandrate.repository.ReviewRepository
 import com.example.watchandrate.viewmodel.ReviewViewModel
+import androidx.navigation.fragment.findNavController
+import com.google.firebase.auth.FirebaseAuth
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.NavOptions
 
 class ReviewFragment : Fragment(R.layout.fragment_review) {
 
@@ -29,7 +33,6 @@ class ReviewFragment : Fragment(R.layout.fragment_review) {
     private var searchQuery: String = ""
     private var showOnlyMyReviews: Boolean = false
 
-    // זמני עד שיהיה Firebase Auth אמיתי
     private val currentUsername = "Ed"
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -43,6 +46,7 @@ class ReviewFragment : Fragment(R.layout.fragment_review) {
         val btnAddReview = view.findViewById<Button>(R.id.btnAddReview)
         val etSearch = view.findViewById<EditText>(R.id.etSearch)
         val btnMyReviews = view.findViewById<Button>(R.id.btnMyReviews)
+        val btnLogout = view.findViewById<Button>(R.id.btnLogout)
 
         viewModel = ViewModelProvider(
             this,
@@ -51,13 +55,10 @@ class ReviewFragment : Fragment(R.layout.fragment_review) {
 
         reviewAdapter = ReviewAdapter(
             onEditClick = { review ->
-                val fragment = EditReviewFragment()
-                fragment.arguments = bundleOf("reviewId" to review.id)
-
-                parentFragmentManager.beginTransaction()
-                    .replace(R.id.fragmentContainer, fragment)
-                    .addToBackStack(null)
-                    .commit()
+                findNavController().navigate(
+                    R.id.action_reviewFragment_to_editReviewFragment,
+                    bundleOf("reviewId" to review.id)
+                )
             },
             onDeleteClick = { review ->
                 AlertDialog.Builder(requireContext())
@@ -103,10 +104,19 @@ class ReviewFragment : Fragment(R.layout.fragment_review) {
         }
 
         btnAddReview.setOnClickListener {
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainer, AddReviewFragment())
-                .addToBackStack(null)
-                .commit()
+            findNavController().navigate(R.id.action_reviewFragment_to_addReviewFragment)
+        }
+
+        btnLogout.setOnClickListener {
+            FirebaseAuth.getInstance().signOut()
+
+            findNavController().navigate(
+                R.id.loginFragment,
+                null,
+                NavOptions.Builder()
+                    .setPopUpTo(R.id.nav_graph, true)
+                    .build()
+            )
         }
     }
 
