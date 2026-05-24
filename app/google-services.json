@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "292954846956",
-    "project_id": "moviehub-c51af",
-    "storage_bucket": "moviehub-c51af.firebasestorage.app"
+    "project_number": "795439063806",
+    "project_id": "watchandratestorage",
+    "storage_bucket": "watchandratestorage.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:292954846956:android:556ac0c48038ce4ff517c9",
+        "mobilesdk_app_id": "1:795439063806:android:f4b455942767b273cafbaf",
         "android_client_info": {
           "package_name": "com.example.watchandrate"
         }
@@ -15,26 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDb0Oo-ZuHoQ8FDSNZwjbh7udZ2mv780WM"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:292954846956:android:40b59c06870fb363f517c9",
-        "android_client_info": {
-          "package_name": "com.movie.moviehub"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDb0Oo-ZuHoQ8FDSNZwjbh7udZ2mv780WM"
+          "current_key": "AIzaSyA31CUDjPORnDTTotjqbt08wFpwYGLfr0g"
         }
       ],
       "services": {

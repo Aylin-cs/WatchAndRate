@@ -63,4 +63,5 @@ dependencies {
     implementation(libs.kotlinx.coroutines.play.services)
     implementation("com.squareup.retrofit2:retrofit:2.11.0")
     implementation("com.squareup.retrofit2:converter-gson:2.11.0")
+    implementation("com.github.bumptech.glide:glide:4.16.0")
 }
