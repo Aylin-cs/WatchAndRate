@@ -13,7 +13,7 @@ import com.example.watchandrate.repository.ReviewRepository
 import com.example.watchandrate.viewmodel.ReviewViewModel
 import java.util.UUID
 import androidx.appcompat.widget.Toolbar
-
+import com.google.firebase.auth.FirebaseAuth
 class AddReviewFragment : Fragment(R.layout.fragment_add_review) {
 
     private lateinit var viewModel: ReviewViewModel
@@ -49,10 +49,11 @@ class AddReviewFragment : Fragment(R.layout.fragment_add_review) {
             if (movieTitle.isEmpty() || username.isEmpty() || reviewText.isEmpty()) {
                 return@setOnClickListener
             }
+            val currentUser = FirebaseAuth.getInstance().currentUser ?: return@setOnClickListener
 
             val review = Review(
                 id = UUID.randomUUID().toString(),
-                userId = username.lowercase(),
+                userId = currentUser.uid,
                 movieId = UUID.randomUUID().toString(),
                 movieTitle = movieTitle,
                 text = reviewText,

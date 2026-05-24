@@ -59,7 +59,6 @@ class EditReviewFragment : Fragment(R.layout.fragment_edit_review) {
             val updatedReview = existingReview.copy(
                 movieTitle = etMovieTitle.text.toString().trim(),
                 username = etUsername.text.toString().trim(),
-                userId = etUsername.text.toString().trim().lowercase(),
                 text = etReviewText.text.toString().trim(),
                 updatedAt = System.currentTimeMillis()
             )
