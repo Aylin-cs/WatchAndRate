@@ -44,6 +44,10 @@
         <action
             android:id="@+id/action_reviewFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
+
+        <action
+            android:id="@+id/action_reviewFragment_to_commentsFragment"
+            app:destination="@id/commentsFragment" />
     </fragment>
 
     <fragment
@@ -65,5 +69,13 @@
         android:id="@+id/profileFragment"
         android:name="com.example.watchandrate.user_interface.ProfileFragment"
         android:label="ProfileFragment" />
+    <fragment
+        android:id="@+id/commentsFragment"
+        android:name="com.example.watchandrate.user_interface.CommentsFragment"
+        android:label="Comments">
 
+        <argument
+            android:name="reviewId"
+            app:argType="string" />
+    </fragment>
 </navigation>

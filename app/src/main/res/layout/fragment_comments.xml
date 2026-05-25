@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F8F3FA"
+    android:padding="16dp">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarComments"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="#6F4CAF"
+        android:navigationIcon="@android:drawable/ic_media_previous"
+        android:title="Comments"
+        android:titleTextColor="@android:color/white" />
+
+    <Button
+        android:id="@+id/btnBackFromComments"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Back" />
+
+    <TextView
+        android:id="@+id/tvComments"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingTop="16dp"
+        android:text="No comments yet"
+        android:textSize="14sp"
+        android:textColor="#333333" />
+
+    <EditText
+        android:id="@+id/etComment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Write a comment..." />
+
+    <Button
+        android:id="@+id/btnAddComment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add Comment" />
+
+</LinearLayout>

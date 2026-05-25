@@ -4,12 +4,14 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.example.watchandrate.model.Comment
 import com.example.watchandrate.model.Review
 
-@Database(entities = [Review::class], version = 1)
+@Database(entities = [Review::class, Comment::class], version = 2)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun reviewDao(): ReviewDao
+    abstract fun commentDao(): CommentDao
 
     companion object {
         @Volatile
@@ -21,7 +23,10 @@ abstract class AppDatabase : RoomDatabase() {
                     context.applicationContext,
                     AppDatabase::class.java,
                     "app_database"
-                ).build().also { instance = it }
+                )
+                    .fallbackToDestructiveMigration()
+                    .build()
+                    .also { instance = it }
             }
         }
     }
