@@ -17,12 +17,13 @@ class ReviewAdapter(
     private val currentUserId: String?,
     private val onEditClick: (Review) -> Unit,
     private val onCommentsClick: (Review) -> Unit,
-    private val onDeleteClick: (Review) -> Unit
+    private val onDeleteClick: (Review) -> Unit,
+    private val onLikeClick: (Review) -> Unit
 ) : RecyclerView.Adapter<ReviewAdapter.ReviewViewHolder>() {
 
     private var reviews: List<Review> = emptyList()
     private var commentCounts: Map<String, Int> = emptyMap()
-    private val likedReviewIds = mutableSetOf<String>()
+
 
     fun submitList(newReviews: List<Review>) {
         reviews = newReviews
@@ -44,18 +45,10 @@ class ReviewAdapter(
         holder.bind(
             review = reviews[position],
             currentUserId = currentUserId,
-            isLiked = likedReviewIds.contains(reviews[position].id),
+            isLiked = currentUserId != null && reviews[position].likedBy.contains(currentUserId),
             onEditClick = onEditClick,
             onDeleteClick = onDeleteClick,
-            onLikeClick = { review ->
-                if (likedReviewIds.contains(review.id)) {
-                    likedReviewIds.remove(review.id)
-                } else {
-                    likedReviewIds.add(review.id)
-                }
-
-                notifyItemChanged(position)
-            },
+            onLikeClick = onLikeClick,
             onCommentsClick = onCommentsClick,
             commentCount = commentCounts[reviews[position].id] ?: 0
         )
@@ -111,10 +104,12 @@ class ReviewAdapter(
             btnEditReview.visibility = if (isOwner) View.VISIBLE else View.GONE
             btnDeleteReview.visibility = if (isOwner) View.VISIBLE else View.GONE
 
+            val likeCount = review.likedBy.size
+
             btnLikeReview.text = if (isLiked) {
-                "♥ Like · 1"
+                "♥ Like · $likeCount"
             } else {
-                "♡ Like · 0"
+                "♡ Like · $likeCount"
             }
 
             btnEditReview.setOnClickListener {

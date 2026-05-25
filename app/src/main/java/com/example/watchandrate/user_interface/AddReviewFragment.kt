@@ -113,6 +113,8 @@ class AddReviewFragment : Fragment(R.layout.fragment_add_review) {
                     localImagePath = null,
                     userPhotoUrl = "",
                     username = username,
+                    likedBy = emptyList(),
+                    likesCount = 0,
                     createdAt = System.currentTimeMillis(),
                     updatedAt = System.currentTimeMillis()
                 )

@@ -17,6 +17,8 @@ data class Review(
     val localImagePath: String?,
     val userPhotoUrl: String,
     val username: String,
+    val likedBy: List<String> = emptyList(),
+    val likesCount: Int = 0,
     val createdAt: Long,
     val updatedAt: Long
 )
