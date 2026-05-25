@@ -85,6 +85,24 @@ class ReviewFragment : Fragment(R.layout.fragment_review) {
                     R.id.action_reviewFragment_to_commentsFragment,
                     bundleOf("reviewId" to review.id)
                 )
+            },
+
+            onLikeClick = { review ->
+                val userId = currentUserId ?: return@ReviewAdapter
+
+                val updatedLikedBy = if (review.likedBy.contains(userId)) {
+                    review.likedBy - userId
+                } else {
+                    review.likedBy + userId
+                }
+
+                val updatedReview = review.copy(
+                    likedBy = updatedLikedBy,
+                    likesCount = updatedLikedBy.size,
+                    updatedAt = System.currentTimeMillis()
+                )
+
+                viewModel.updateReview(updatedReview)
             }
         )
 

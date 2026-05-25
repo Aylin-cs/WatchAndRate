@@ -6,8 +6,9 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.watchandrate.model.Comment
 import com.example.watchandrate.model.Review
-
+import androidx.room.TypeConverters
 @Database(entities = [Review::class, Comment::class], version = 2)
+@TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun reviewDao(): ReviewDao
