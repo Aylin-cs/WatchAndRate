@@ -25,7 +25,9 @@ import androidx.navigation.NavOptions
 import androidx.lifecycle.lifecycleScope
 import com.example.watchandrate.network.RetrofitClient
 import kotlinx.coroutines.launch
-
+import com.example.watchandrate.data.CommentDao
+import com.example.watchandrate.repository.CommentRepository
+import kotlinx.coroutines.flow.first
 class ReviewFragment : Fragment(R.layout.fragment_review) {
 
     private lateinit var viewModel: ReviewViewModel
@@ -40,10 +42,10 @@ class ReviewFragment : Fragment(R.layout.fragment_review) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         val reviewDao = AppDatabase.getInstance(requireContext()).reviewDao()
         val repository = ReviewRepository(reviewDao)
-
+        val commentDao = AppDatabase.getInstance(requireContext()).commentDao()
+        val commentRepository = CommentRepository(commentDao)
         val tvEmptyState = view.findViewById<TextView>(R.id.tvEmptyState)
         val recyclerReviews = view.findViewById<RecyclerView>(R.id.recyclerReviews)
         val btnAddReview = view.findViewById<Button>(R.id.btnAddReview)
@@ -77,6 +79,12 @@ class ReviewFragment : Fragment(R.layout.fragment_review) {
                     }
                     .setNegativeButton("Cancel", null)
                     .show()
+            },
+            onCommentsClick = { review ->
+                findNavController().navigate(
+                    R.id.action_reviewFragment_to_commentsFragment,
+                    bundleOf("reviewId" to review.id)
+                )
             }
         )
 
@@ -85,6 +93,20 @@ class ReviewFragment : Fragment(R.layout.fragment_review) {
 
         viewModel.allReviews.observe(viewLifecycleOwner) { reviews ->
             allReviews = reviews
+            lifecycleScope.launch {
+                val counts = mutableMapOf<String, Int>()
+
+                reviews.forEach { review ->
+                    val commentCount =
+                        commentRepository.getCommentsForReview(review.id)
+                            .first()
+                            .size
+
+                    counts[review.id] = commentCount
+                }
+
+                reviewAdapter.updateCommentCounts(counts)
+            }
             updateReviewList(tvEmptyState, recyclerReviews)
         }
 

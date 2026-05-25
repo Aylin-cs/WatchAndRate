@@ -16,14 +16,21 @@ import com.example.watchandrate.model.Review
 class ReviewAdapter(
     private val currentUserId: String?,
     private val onEditClick: (Review) -> Unit,
+    private val onCommentsClick: (Review) -> Unit,
     private val onDeleteClick: (Review) -> Unit
 ) : RecyclerView.Adapter<ReviewAdapter.ReviewViewHolder>() {
 
     private var reviews: List<Review> = emptyList()
+    private var commentCounts: Map<String, Int> = emptyMap()
     private val likedReviewIds = mutableSetOf<String>()
 
     fun submitList(newReviews: List<Review>) {
         reviews = newReviews
+        notifyDataSetChanged()
+    }
+
+    fun updateCommentCounts(newCounts: Map<String, Int>) {
+        commentCounts = newCounts
         notifyDataSetChanged()
     }
 
@@ -48,7 +55,9 @@ class ReviewAdapter(
                 }
 
                 notifyItemChanged(position)
-            }
+            },
+            onCommentsClick = onCommentsClick,
+            commentCount = commentCounts[reviews[position].id] ?: 0
         )
     }
 
@@ -74,7 +83,9 @@ class ReviewAdapter(
             isLiked: Boolean,
             onEditClick: (Review) -> Unit,
             onDeleteClick: (Review) -> Unit,
-            onLikeClick: (Review) -> Unit
+            onLikeClick: (Review) -> Unit,
+            onCommentsClick: (Review) -> Unit,
+            commentCount: Int
         ) {
             tvMovieTitle.text = review.movieTitle
             tvUsername.text = review.username
@@ -134,8 +145,10 @@ class ReviewAdapter(
                     .show()
             }
 
+            btnCommentsReview.text = "$commentCount comments"
+
             btnCommentsReview.setOnClickListener {
-                // TODO: open comments screen
+                onCommentsClick(review)
             }
         }
     }
