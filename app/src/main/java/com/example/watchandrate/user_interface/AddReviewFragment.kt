@@ -94,11 +94,6 @@ class AddReviewFragment : Fragment(R.layout.fragment_add_review) {
                 return@setOnClickListener
             }
 
-            if (selectedImageUri == null) {
-                Toast.makeText(requireContext(), "Please select an image", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-
             val currentUser = FirebaseAuth.getInstance().currentUser
                 ?: return@setOnClickListener
 
@@ -106,7 +101,7 @@ class AddReviewFragment : Fragment(R.layout.fragment_add_review) {
 
             try {
                 val reviewId = UUID.randomUUID().toString()
-                val base64Image = convertImageToBase64(selectedImageUri!!)
+                val base64Image = selectedImageUri?.let { convertImageToBase64(it) } ?: ""
 
                 val review = Review(
                     id = reviewId,
