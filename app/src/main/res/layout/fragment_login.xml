@@ -6,12 +6,28 @@
     android:padding="24dp">
 
     <TextView
+        android:id="@+id/tvAppTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Watch&amp;Rate"
+        android:textSize="34sp"
+        android:textStyle="bold"
+        android:textColor="?attr/colorPrimary"
+        android:letterSpacing="0.05"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="80dp" />
+
+    <TextView
         android:id="@+id/tvLoginTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Sign In"
         android:textSize="28sp"
         android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/tvAppTitle"
+        android:layout_marginTop="35dp"
         app:layout_constraintBottom_toTopOf="@id/etLoginEmail"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

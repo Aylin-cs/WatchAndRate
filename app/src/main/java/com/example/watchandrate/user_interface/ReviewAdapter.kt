@@ -67,9 +67,6 @@ class ReviewAdapter(
         private val btnLikeReview: Button = itemView.findViewById(R.id.btnLikeReview)
         private val btnOpenReview: Button = itemView.findViewById(R.id.btnOpenReview)
         private val btnCommentsReview: Button = itemView.findViewById(R.id.btnCommentsReview)
-
-        private val tvStars: TextView = itemView.findViewById(R.id.tvStars)
-
         fun bind(
             review: Review,
             currentUserId: String?,
@@ -83,7 +80,6 @@ class ReviewAdapter(
             tvMovieTitle.text = review.movieTitle
             tvUsername.text = review.username
             tvReviewText.text = review.text
-            tvStars.text = "★★★★★"
 
             if (!review.imageUrl.isNullOrEmpty()) {
                 try {

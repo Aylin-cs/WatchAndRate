@@ -68,6 +68,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         val btnSaveProfile = view.findViewById<Button>(R.id.btnSaveProfile)
         val btnBackToReviews = view.findViewById<Button>(R.id.btnBackToReviews)
         val btnSelectProfileImage = view.findViewById<Button>(R.id.btnSelectProfileImage)
+        val btnDeleteProfileImage = view.findViewById<Button>(R.id.btnDeleteProfileImage)
         ivProfileImage = view.findViewById(R.id.ivProfileImage)
 
         val currentUser = FirebaseAuth.getInstance().currentUser
@@ -93,6 +94,24 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
         btnSelectProfileImage.setOnClickListener {
             imagePickerLauncher.launch("image/*")
+        }
+
+        btnDeleteProfileImage.setOnClickListener {
+            selectedImageUri = null
+            ivProfileImage.setImageResource(android.R.drawable.ic_menu_camera)
+
+            currentUser?.let { user ->
+                firestore.collection("users").document(user.uid)
+                    .update("profileImage", "")
+                    .addOnSuccessListener {
+                        tvStatus.setTextColor(resources.getColor(android.R.color.holo_green_dark))
+                        tvStatus.text = "Photo deleted"
+                    }
+                    .addOnFailureListener {
+                        tvStatus.setTextColor(resources.getColor(android.R.color.holo_red_dark))
+                        tvStatus.text = "Failed to delete photo"
+                    }
+            }
         }
 
         btnSaveProfile.setOnClickListener {

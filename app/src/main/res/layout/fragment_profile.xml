@@ -12,10 +12,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="My Profile"
-        android:textSize="30sp"
+        android:textSize="26sp"
+        android:layout_marginEnd="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
         android:textStyle="bold"
         android:textColor="#333333"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -76,6 +77,20 @@
             app:layout_constraintTop_toBottomOf="@id/ivProfileImage"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
+        <Button
+            android:id="@+id/btnDeleteProfileImage"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Delete Photo"
+            android:layout_height="36dp"
+            android:textSize="11sp"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:textColor="#D9534F"
+            android:backgroundTint="#FDECEC"
+            app:layout_constraintTop_toBottomOf="@id/btnSelectProfileImage"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <TextView
             android:id="@+id/tvNameLabel"
@@ -85,13 +100,13 @@
             android:textColor="#666666"
             android:textSize="13sp"
             android:layout_marginTop="20dp"
-            app:layout_constraintTop_toBottomOf="@id/btnSelectProfileImage"
-            app:layout_constraintStart_toStartOf="@id/etUsername" />
+            app:layout_constraintTop_toBottomOf="@id/btnDeleteProfileImage"
+            app:layout_constraintEnd_toEndOf="@id/etUsername" />
 
         <EditText
             android:id="@+id/etUsername"
             android:layout_width="0dp"
-            android:layout_height="52dp"
+            android:layout_height="48dp"
             android:layout_marginTop="8dp"
             android:background="@drawable/bg_review_card"
             android:hint="Username"

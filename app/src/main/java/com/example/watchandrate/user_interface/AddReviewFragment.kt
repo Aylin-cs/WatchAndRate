@@ -72,16 +72,22 @@ class AddReviewFragment : Fragment(R.layout.fragment_add_review) {
         val etReviewText = view.findViewById<EditText>(R.id.etReviewText)
         val btnSaveReview = view.findViewById<Button>(R.id.btnSaveReview)
         val btnSelectImage = view.findViewById<Button>(R.id.btnSelectImage)
-        val toolbar = view.findViewById<Toolbar>(R.id.toolbarAddReview)
+        val btnCancel = view.findViewById<Button>(R.id.btnCancel)
+        val ivSelectedImage = view.findViewById<ImageView>(R.id.ivSelectedImage)
+        val btnBack = view.findViewById<Button>(R.id.btnBack)
 
-        toolbar.navigationIcon?.setTint(resources.getColor(android.R.color.white))
-
-        toolbar.setNavigationOnClickListener {
+        btnBack.setOnClickListener {
             parentFragmentManager.popBackStack()
         }
 
         btnSelectImage.setOnClickListener {
             imagePickerLauncher.launch("image/*")
+        }
+
+        btnCancel.setOnClickListener {
+            selectedImageUri = null
+            ivSelectedImage.setImageDrawable(null)
+            ivSelectedImage.visibility = View.GONE
         }
 
         btnSaveReview.setOnClickListener {
