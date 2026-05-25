@@ -12,12 +12,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Reviews"
-        android:textSize="26sp"
+        android:textSize="24sp"
         android:textStyle="bold"
         android:layout_marginTop="20dp"
-        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+         />
 
     <!-- Actions row -->
     <LinearLayout
@@ -27,7 +28,7 @@
         android:layout_marginTop="12dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:gravity="center_vertical"
+        android:gravity="center"
         android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@id/tvScreenTitle"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,15 +36,17 @@
 
         <Button
             android:id="@+id/btnProfile"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="40dp"
             android:text="Profile"
-            android:textColor="?attr/colorPrimary"
-            android:backgroundTint="#EDE7F6" />
+            android:textColor="@android:color/white"
+            android:backgroundTint="?attr/colorPrimary" />
 
         <Button
             android:id="@+id/btnLogout"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="40dp"
             android:layout_marginStart="8dp"
             android:text="Logout"
@@ -66,8 +69,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Latest reviews from the community"
-        android:textColor="#777777"
-        android:textSize="13sp"
+        android:textColor="#888888"
+        android:textSize="12sp"
         android:layout_marginTop="6dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
@@ -83,6 +86,9 @@
         android:layout_marginTop="12dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="12dp"
+        android:gravity="center_vertical"
+        android:paddingEnd="12dp"
+        android:textSize="13sp"
         android:background="@drawable/bg_review_card"
         android:hint="Search by movie or text..."
         android:paddingStart="12dp"

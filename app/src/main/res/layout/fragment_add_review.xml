@@ -5,15 +5,27 @@
     android:layout_height="match_parent"
     android:padding="16dp">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbarAddReview"
-        android:layout_width="0dp"
+    <Button
+        android:id="@+id/btnBack"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:elevation="4dp"
-        app:title="Add Review"
-        app:titleTextColor="@android:color/white"
-        app:navigationIcon="?attr/homeAsUpIndicator"
+        android:text="Back"
+        android:textSize="12sp"
+        android:textColor="@android:color/white"
+        android:backgroundTint="?attr/colorPrimary"
+        app:layout_constraintTop_toTopOf="@id/tvAddReviewTitle"
+        app:layout_constraintBottom_toBottomOf="@id/tvAddReviewTitle"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tvAddReviewTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Add Review"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        android:textColor="#333333"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -24,7 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:hint="Movie title"
-        app:layout_constraintTop_toBottomOf="@id/toolbarAddReview"
+        app:layout_constraintTop_toBottomOf="@id/tvAddReviewTitle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -44,22 +56,50 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:hint="Write your review"
-        android:minLines="4"
+        android:minLines="0"
         android:gravity="top"
         app:layout_constraintTop_toBottomOf="@id/etUsername"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <Button
-        android:id="@+id/btnSelectImage"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/layoutButtons"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Select Image"
-        android:backgroundTint="?attr/colorPrimary"
-        android:textColor="@android:color/white"
+        android:gravity="end"
+        android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@id/etReviewText"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <Button
+            android:id="@+id/btnSaveReview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Save"
+            android:textColor="@android:color/white"
+            android:backgroundTint="?attr/colorPrimary" />
+
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Cancel"
+            android:textColor="@android:color/white"
+            android:backgroundTint="?attr/colorPrimary" />
+
+        <Button
+            android:id="@+id/btnSelectImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Select Image"
+            android:textColor="@android:color/white"
+            android:backgroundTint="?attr/colorPrimary" />
+
+    </LinearLayout>
 
     <ImageView
         android:id="@+id/ivSelectedImage"
@@ -68,18 +108,8 @@
         android:layout_marginTop="12dp"
         android:scaleType="centerCrop"
         android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@id/btnSelectImage"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/btnSaveReview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="Save"
-        android:backgroundTint="?attr/colorPrimary"
-        android:textColor="@android:color/white"
-        app:layout_constraintTop_toBottomOf="@id/ivSelectedImage"
+        app:layout_constraintTop_toBottomOf="@id/layoutButtons"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
