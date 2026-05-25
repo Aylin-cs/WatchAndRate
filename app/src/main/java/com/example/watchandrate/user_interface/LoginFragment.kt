@@ -20,6 +20,10 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
         auth = FirebaseAuth.getInstance()
 
+        if (auth.currentUser != null) {
+            findNavController().navigate(R.id.action_loginFragment_to_reviewFragment)
+            return
+        }
         val emailEditText = view.findViewById<EditText>(R.id.etLoginEmail)
         val passwordEditText = view.findViewById<EditText>(R.id.etLoginPassword)
         val loginButton = view.findViewById<Button>(R.id.btnLogin)
